@@ -10,7 +10,7 @@ CITY_DATA = {
 
 def get_filters():
     """
-    Prompts the user to choose a city, month, and day for data analysis
+    Prompts the user to choose a city, month, and day for data analysis.
     """
     while True:
         city = input("Pick a city (Chicago, New York City, Washington): ").lower()
