@@ -35,28 +35,29 @@ def get_filters():
     return city, month, day
 
 
-def load_data(city, month, day, load_raw=False):
+def load_data(city, month, day):
     """
     Loads and filters data based on the user's choices (city, month, day).
     Optionally loads raw data for display.
     """
-    df = pd.read_csv(CITY_DATA[city])
+    
+    try:
+        df = pd.read_csv(CITY_DATA[city])
+    except FileNotFoundError:
+        print(f"Error: The file for {city} was not found.")
+        return pd.DataFrame()
 
-    # Convert the 'Start Time' column to datetime
+    # Convert 'Start Time' to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
 
-    # Filter by month if specified
+    # Filter by month and day
     if month != 'all':
         df = df[df['Start Time'].dt.month_name().str.lower() == month]
-
-    # Filter by day if specified
     if day != 'all':
         df = df[df['Start Time'].dt.day_name().str.lower() == day]
 
-    if load_raw:
-        return df
-    else:
-        return df.drop(columns=['Start Time'])  # Example: drop 'Start Time' for analysis
+    return df
+
 
 def display_raw_data(df):
     """
