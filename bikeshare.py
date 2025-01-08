@@ -37,8 +37,16 @@ def get_filters():
 
 def load_data(city, month, day, load_raw=False):
     """
-    Loads and filters data based on the user's choices (city, month, day).
-    Optionally loads raw data for display.
+    Loads and filters the bikeshare data based on the user's choices for city, month, and day.
+
+    Args:
+    city (str): The name of the city to analyze.
+    month (str): The month to filter the data, or 'all' for no filter.
+    day (str): The day of the week to filter the data, or 'all' for no filter.
+    load_raw (bool): If True, returns the raw dataframe; if False, drops the 'Start Time' column.
+
+    Returns:
+    pd.DataFrame: A dataframe containing the filtered bikeshare data.
     """
     df = pd.read_csv(CITY_DATA[city])
 
@@ -60,7 +68,10 @@ def load_data(city, month, day, load_raw=False):
 
 def display_raw_data(df):
     """
-    Displays raw data in chunks of 5 rows, prompting the user to continue or stop.
+    Displays raw data from the DataFrame in chunks of 5 rows, prompting the user to continue or stop.
+
+    This function prints 5 rows of data at a time and asks the user if they want to see more.
+    The user can stop viewing the raw data by responding 'no'.
     """
     start_loc = 0
     while True:
