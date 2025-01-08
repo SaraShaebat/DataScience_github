@@ -35,11 +35,16 @@ def get_filters():
     return city, month, day
 
 
+<<<<<<< HEAD
 def load_data(city, month, day):
+=======
+def load_data(city, month, day, load_raw=False):
+>>>>>>> 3b2c68e (Enhance docstrings for better documentation)
     """
     Loads and filters data based on the user's choices (city, month, day).
     Optionally loads raw data for display.
     """
+<<<<<<< HEAD
     
     try:
         df = pd.read_csv(CITY_DATA[city])
@@ -58,6 +63,25 @@ def load_data(city, month, day):
 
     return df
 
+=======
+    df = pd.read_csv(CITY_DATA[city])
+
+    # Convert the 'Start Time' column to datetime
+    df['Start Time'] = pd.to_datetime(df['Start Time'])
+
+    # Filter by month if specified
+    if month != 'all':
+        df = df[df['Start Time'].dt.month_name().str.lower() == month]
+
+    # Filter by day if specified
+    if day != 'all':
+        df = df[df['Start Time'].dt.day_name().str.lower() == day]
+
+    if load_raw:
+        return df
+    else:
+        return df.drop(columns=['Start Time'])  # Example: drop 'Start Time' for analysis
+>>>>>>> 3b2c68e (Enhance docstrings for better documentation)
 
 def display_raw_data(df):
     """
@@ -93,6 +117,7 @@ def time_stats(df):
     print('-' * 40)
 
 
+<<<<<<< HEAD
 def time_stats(df):
     """Displays the most frequent travel times."""
     print("\nAnalyzing the most frequent travel times...")
@@ -103,6 +128,22 @@ def time_stats(df):
     print(f"Most common month: {start_times.dt.month_name().mode()[0]}")
     print(f"Most common day of the week: {start_times.dt.day_name().mode()[0]}")
     print(f"Most common start hour: {start_times.dt.hour.mode()[0]}")
+=======
+def station_stats(df):
+    """Displays the most popular stations and trips."""
+    print("\nAnalyzing the most popular stations and trips...")
+    start_time = time.time()
+
+    # Most common start station
+    print(f"Most common start station: {df['Start Station'].mode()[0]}")
+
+    # Most common end station
+    print(f"Most common end station: {df['End Station'].mode()[0]}")
+
+    # Most frequent trip
+    most_frequent_trip = df.groupby(['Start Station', 'End Station']).size().idxmax()
+    print(f"Most frequent trip: {most_frequent_trip[0]} -> {most_frequent_trip[1]}")
+>>>>>>> 3b2c68e (Enhance docstrings for better documentation)
 
     print(f"\nThat took {time.time() - start_time:.2f} seconds.")
     print('-' * 40)
