@@ -37,57 +37,33 @@ def get_filters():
     return city, month, day
 
 
-<<<<<<< HEAD
-def load_data(city, month, day):
-=======
 def load_data(city, month, day, load_raw=False):
->>>>>>> 3b2c68e (Enhance docstrings for better documentation)
     """
-<<<<<<< HEAD
-    Loads and filters data based on the user's choices (city, month, day).
-    Optionally loads raw data for display.
-    """
-<<<<<<< HEAD
-    
-=======
     Loads and filters the bikeshare data based on the user's choices for city, month, and day.
+    Optionally loads raw data for display.
 
     Args:
         city (str): The name of the city to analyze.
         month (str): The month to filter the data, or 'all' for no filter.
         day (str): The day of the week to filter the data, or 'all' for no filter.
+        load_raw (bool): Whether to return raw data or not.
 
     Returns:
         pd.DataFrame: A dataframe containing the filtered bikeshare data.
     """
->>>>>>> 9e3054c (bikeshare project last)
     try:
         df = pd.read_csv(CITY_DATA[city])
     except FileNotFoundError:
         print(f"Error: The file for {city} was not found.")
         return pd.DataFrame()
 
-    # Convert 'Start Time' to datetime
-    df['Start Time'] = pd.to_datetime(df['Start Time'])
-
-    # Apply filters
-    if month != 'all':
-        month_idx = ['january', 'february', 'march', 'april', 'may', 'june'].index(month) + 1
-        df = df[df['Start Time'].dt.month == month_idx]
-    if day != 'all':
-        df = df[df['Start Time'].dt.day_name().str.lower() == day]
-
-    return df
-
-=======
-    df = pd.read_csv(CITY_DATA[city])
-
     # Convert the 'Start Time' column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
 
     # Filter by month if specified
     if month != 'all':
-        df = df[df['Start Time'].dt.month_name().str.lower() == month]
+        month_idx = ['january', 'february', 'march', 'april', 'may', 'june'].index(month) + 1
+        df = df[df['Start Time'].dt.month == month_idx]
 
     # Filter by day if specified
     if day != 'all':
@@ -97,15 +73,11 @@ def load_data(city, month, day, load_raw=False):
         return df
     else:
         return df.drop(columns=['Start Time'])  # Example: drop 'Start Time' for analysis
->>>>>>> 3b2c68e (Enhance docstrings for better documentation)
+
 
 def display_raw_data(df):
     """
-<<<<<<< HEAD
-    Displays raw data in chunks of 5 rows, prompting the user to continue or stop.
-=======
     Displays raw data from the DataFrame in chunks of 5 rows, prompting the user to continue or stop.
->>>>>>> 9e3054c (bikeshare project last)
     """
     start_loc = 0
     while start_loc < len(df):
@@ -137,19 +109,6 @@ def time_stats(df):
     print('-' * 40)
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-def time_stats(df):
-    """Displays the most frequent travel times."""
-    print("\nAnalyzing the most frequent travel times...")
-    start_time = time.time()
-
-    start_times = df['Start Time']
-
-    print(f"Most common month: {start_times.dt.month_name().mode()[0]}")
-    print(f"Most common day of the week: {start_times.dt.day_name().mode()[0]}")
-    print(f"Most common start hour: {start_times.dt.hour.mode()[0]}")
-=======
 def station_stats(df):
     """Displays the most popular stations and trips."""
     print("\nAnalyzing the most popular stations and trips...")
@@ -164,14 +123,11 @@ def station_stats(df):
     # Most frequent trip
     most_frequent_trip = df.groupby(['Start Station', 'End Station']).size().idxmax()
     print(f"Most frequent trip: {most_frequent_trip[0]} -> {most_frequent_trip[1]}")
->>>>>>> 3b2c68e (Enhance docstrings for better documentation)
 
     print(f"\nThat took {time.time() - start_time:.2f} seconds.")
     print('-' * 40)
 
 
-=======
->>>>>>> 9e3054c (bikeshare project last)
 def trip_duration_stats(df):
     """Displays statistics about trip durations."""
     print("\nCalculating trip durations...")
@@ -215,28 +171,6 @@ def user_stats(df):
 
     print(f"\nThat took {time.time() - start_time:.2f} seconds.")
     print('-' * 40)
-<<<<<<< HEAD
-=======
-
-
-def station_stats(df):
-    """Displays statistics on the most popular stations and trip."""
-    print("\nCalculating the most popular stations and trips...")
-    start_time = time.time()
-
-    # Most commonly used start station
-    print(f"Most common start station: {df['Start Station'].mode()[0]}")
-
-    # Most commonly used end station
-    print(f"Most common end station: {df['End Station'].mode()[0]}")
-
-    # Most common trip (combination of start and end station)
-    df['Trip'] = df['Start Station'] + " to " + df['End Station']
-    print(f"Most common trip: {df['Trip'].mode()[0]}")
-
-    print(f"\nThat took {time.time() - start_time:.2f} seconds.")
-    print('-' * 40)
->>>>>>> 9e3054c (bikeshare project last)
 
 
 def main():
