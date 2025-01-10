@@ -19,6 +19,7 @@ def get_filters():
         print("Invalid choice. Choose from Chicago, New York City, or Washington.")
 
     # Prompt for month filter
+<<<<<<< HEAD
     valid_months = ['january', 'february', 'march', 'april', 'may', 'june', 'all']
     while True:
         month = input("Which month (January, February, ..., June) or type 'all' for no filter: ").lower()
@@ -33,6 +34,20 @@ def get_filters():
         if day in valid_days:
             break
         print("Invalid day. Choose a day of the week or type 'all'.")
+=======
+    month = input("Which month (January, February, ..., June) or type 'all' for no filter: ").lower()
+    valid_months = ['january', 'february', 'march', 'april', 'may', 'june']
+    if month not in valid_months and month != 'all':
+        print("Invalid month. Choose from the given months or type 'all'.")
+        return get_filters()
+
+    # Prompt for day filter
+    day = input("Which day (Monday, Tuesday, ..., Sunday) or type 'all' for no filter: ").lower()
+    valid_days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+    if day not in valid_days and day != 'all':
+        print("Invalid day. Choose from the days of the week or type 'all'.")
+        return get_filters()
+>>>>>>> documentation
 
     return city, month, day
 
@@ -40,6 +55,7 @@ def get_filters():
 def load_data(city, month, day, load_raw=False):
     """
     Loads and filters the bikeshare data based on the user's choices for city, month, and day.
+<<<<<<< HEAD
     Optionally loads raw data for display.
 
     Args:
@@ -56,14 +72,31 @@ def load_data(city, month, day, load_raw=False):
     except FileNotFoundError:
         print(f"Error: The file for {city} was not found.")
         return pd.DataFrame()
+=======
+
+    Args:
+    city (str): The name of the city to analyze.
+    month (str): The month to filter the data, or 'all' for no filter.
+    day (str): The day of the week to filter the data, or 'all' for no filter.
+    load_raw (bool): If True, returns the raw dataframe; if False, drops the 'Start Time' column.
+
+    Returns:
+    pd.DataFrame: A dataframe containing the filtered bikeshare data.
+    """
+    df = pd.read_csv(CITY_DATA[city])
+>>>>>>> documentation
 
     # Convert the 'Start Time' column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
 
     # Filter by month if specified
     if month != 'all':
+<<<<<<< HEAD
         month_idx = ['january', 'february', 'march', 'april', 'may', 'june'].index(month) + 1
         df = df[df['Start Time'].dt.month == month_idx]
+=======
+        df = df[df['Start Time'].dt.month_name().str.lower() == month]
+>>>>>>> documentation
 
     # Filter by day if specified
     if day != 'all':
@@ -74,6 +107,7 @@ def load_data(city, month, day, load_raw=False):
     else:
         return df.drop(columns=['Start Time'])  # Example: drop 'Start Time' for analysis
 
+<<<<<<< HEAD
 
 def display_raw_data(df):
     """
@@ -85,12 +119,31 @@ def display_raw_data(df):
         start_loc += 5
         if start_loc >= len(df):
             print("\nEnd of data reached.")
+=======
+def display_raw_data(df):
+    """
+    Displays raw data from the DataFrame in chunks of 5 rows, prompting the user to continue or stop.
+
+    This function prints 5 rows of data at a time and asks the user if they want to see more.
+    The user can stop viewing the raw data by responding 'no'.
+    """
+    start_loc = 0
+    while True:
+        end_loc = start_loc + 5
+        # Display the next 5 rows without index and header
+        print(df.iloc[start_loc:end_loc].to_string(index=False, header=False))
+        start_loc = end_loc
+        if start_loc >= len(df):
+>>>>>>> documentation
             break
         user_input = input("\nWould you like to see the next 5 rows? Enter 'yes' or 'no': ").lower()
         if user_input != 'yes':
             break
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> documentation
 def time_stats(df):
     """Displays the most frequent travel times."""
     print("\nAnalyzing the most frequent travel times...")
@@ -172,7 +225,10 @@ def user_stats(df):
     print(f"\nThat took {time.time() - start_time:.2f} seconds.")
     print('-' * 40)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> documentation
 def main():
     """Main program loop to explore bikeshare data."""
     while True:
@@ -182,17 +238,24 @@ def main():
         # Load the data based on user input
         df = load_data(city, month, day, load_raw=True)
 
+<<<<<<< HEAD
         # Check if the data is loaded successfully
         if df.empty:
             print("\nNo data available for the selected filters. Please try again.")
             continue
 
+=======
+>>>>>>> documentation
         # Ask user to view raw data
         view_raw = input("\nWould you like to view the raw data? Enter 'yes' or 'no': ").lower()
         while view_raw not in ['yes', 'no']:
             print("Invalid input. Please enter 'yes' or 'no'.")
             view_raw = input("\nWould you like to view the raw data? Enter 'yes' or 'no': ").lower()
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> documentation
         if view_raw == 'yes':
             display_raw_data(df)
 
@@ -211,6 +274,11 @@ def main():
         if restart != 'yes':
             break
 
+<<<<<<< HEAD
 
 if __name__ == "__main__":
     main()
+=======
+if __name__ == "__main__":
+    main()
+>>>>>>> documentation
