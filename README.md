@@ -4,14 +4,8 @@
 8/1/2025
 
 # BikeShare Project
-<<<<<<< HEAD
 This project analyzes bike share data from three cities: Chicago, New York City, and Washington. You can filter data by city, month, and day to uncover insights and make data-driven decisions.
 
-=======
-
-This project analyzes bike share data from three cities: Chicago, New York City, and Washington. You can filter data by city, month, and day to uncover insights and make data-driven decisions.
-
->>>>>>> documentation
 ## How It Works
 1. **Pick a city**: Choose Chicago, New York City, or Washington.
 2. **Filter data**: Select a month (January to June) and day of the week, or view all data.
@@ -35,11 +29,5 @@ The `.csv` files contain bikeshare data for different cities. These files are ig
 
 ## Note
 This project uses Python's pandas library for data analysis. The city data files must remain in `.csv` format.
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> documentation
 
 
